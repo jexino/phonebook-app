@@ -46,11 +46,14 @@ router.get('/updatecontact/:id', async (req, res) => {
   }
 });
 
-router.post('/updatecontact/:id', [
+router.post('/updatecontact/:id',  (req, res, next) => {
+    console.log('Request recieved with body:', req.body);
+    next();
+ }, [
   check('name').optional().isLength({ min: 3 }).withMessage('Name must be at least 3 characters long'),
   check('phonenumber').optional().isLength({ min: 10, max: 15 }).withMessage('Please enter a valid phone number'),
   check('email').optional().isEmail().withMessage('Please enter a valid email address')
-], async (req, res) => {
+], updateContact, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

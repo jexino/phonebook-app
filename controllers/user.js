@@ -96,7 +96,7 @@ exports.updateContact = async (req, res) => {
                 phonenumber: phone || undefined,
                 email: email || undefined
             }
-        }, { new: true });
+        }, { new: true, runValidators:true });
 
         if (!updatedContact) {
             return res.status(404).json({ error: 'Contact not found' });
